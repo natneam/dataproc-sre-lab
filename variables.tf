@@ -35,6 +35,62 @@ variable "nat" {
 
 variable "dataproc_sa" {
   type        = string
-  default      = "dataproc-worker-sa"
-  description  = "Dedicated service account for Dataproc master and worker instances"
+  default     = "dataproc-worker-sa"
+  description = "Dedicated service account for Dataproc master and worker instances"
+}
+
+variable "dataproc_cluster_name" {
+  type        = string
+  default     = "secure-dataproc-cluster"
+  description = "The name of the Dataproc cluster"
+}
+
+variable "dataproc_master_num_instances" {
+  type        = number
+  default     = 1
+  description = "The number of master instances for the Dataproc cluster"
+
+  validation {
+    condition     = contains([1, 3], var.dataproc_master_num_instances)
+    error_message = "The dataproc_master_num_instances must be exactly 1 or 3 (High-Avialability)"
+  }
+}
+variable "dataproc_master_machine_type" {
+  type        = string
+  default     = "n1-standard-2"
+  description = "The machine type for the Dataproc master instance"
+}
+variable "dataproc_worker_num_instances" {
+  type        = number
+  default     = 2
+  description = "The number of worker instances for the Dataproc cluster"
+}
+variable "dataproc_worker_machine_type" {
+  type        = string
+  default     = "n1-standard-2"
+  description = "The machine type for the Dataproc worker instances"
+}
+
+variable "dataproc_preemptible_worker_num_instances" {
+  type        = number
+  default     = 4
+  description = "The number of preemptible worker instances for the Dataproc cluster"
+}
+
+variable "dataproc_preemptible_worker_boot_disk_size" {
+  type        = number
+  default     = 50
+  description = "The boot disk size for the Dataproc preemptible worker instances"
+}
+
+variable "dataproc_preemptible_worker_boot_disk_type" {
+  type        = string
+  default     = "pd-standard"
+  description = "The boot disk type for the Dataproc preemptible worker instances"
+}
+
+variable "dataproc_software_image_version" {
+  type        = string
+  default     = "2.1-debian11"
+  description = "The software image version for the Dataproc cluster"
 }

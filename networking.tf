@@ -1,6 +1,8 @@
 resource "google_compute_network" "custom_vpc" {
   name                    = var.custom_vpc
   auto_create_subnetworks = false # Disables default subnet generation
+
+  depends_on = [google_project_service.enabled_apis]
 }
 
 resource "google_compute_subnetwork" "secure_subnet" {
@@ -29,4 +31,25 @@ resource "google_compute_router_nat" "nat" {
     name                    = google_compute_subnetwork.secure_subnet.id
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
+}
+
+resource "google_compute_firewall" "allow_internal" {
+  name    = var.allow_internal
+  network = google_compute_network.custom_vpc.id
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["0-65535"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["0-65535"]
+  }
+
+  source_ranges = ["10.10.0.0/24"]
 }
