@@ -1,10 +1,10 @@
 resource "google_compute_network" "custom_vpc" {
-  name                    = "my-custom-vpc"
+  name                    = var.custom_vpc
   auto_create_subnetworks = false # Disables default subnet generation
 }
 
 resource "google_compute_subnetwork" "secure_subnet" {
-  name                     = "my-secure-subnet"
+  name                     = var.secure_subnet
   ip_cidr_range            = "10.10.0.0/24"
   region                   = var.region
   network                  = google_compute_network.custom_vpc.id
@@ -12,13 +12,13 @@ resource "google_compute_subnetwork" "secure_subnet" {
 }
 
 resource "google_compute_router" "router" {
-  name    = "my-cloud-router"
+  name    = var.router
   region  = var.region
   network = google_compute_network.custom_vpc.id
 }
 
 resource "google_compute_router_nat" "nat" {
-  name                               = "my-cloud-nat"
+  name                               = var.nat
   router                             = google_compute_router.router.name
   region                             = var.region
   nat_ip_allocate_option             = "AUTO_ONLY" # Dynamically scale public IPs

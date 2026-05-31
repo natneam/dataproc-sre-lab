@@ -1,6 +1,6 @@
 # Create Custom Service Account
 resource "google_service_account" "dataproc_sa" {
-  account_id   = "dataproc-worker-sa"
+  account_id   = var.dataproc_sa
   display_name = "Dataproc Worker SA"
   description  = "Dedicated service account for Dataproc master and worker instances"
 }
