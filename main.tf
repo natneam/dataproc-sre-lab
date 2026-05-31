@@ -5,6 +5,21 @@ resource "google_dataproc_cluster" "secure_cluster" {
     # Storage Configuration
     staging_bucket = google_storage_bucket.dataproc_staging.name
 
+    # Monitoring Configuration
+    dataproc_metric_config {
+      metrics {
+        metric_source = "MONITORING_AGENT_DEFAULTS"
+      }
+
+      metrics {
+        metric_source = "YARN"
+      }
+
+      metrics {
+        metric_source = "SPARK"
+      }
+
+    }
     # Primary Master Node
     master_config {
       num_instances = var.dataproc_master_num_instances

@@ -4,7 +4,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 5.0" # Keeps provider within the 5.x version range
+      version = "~> 7.0" # Keeps provider within the 7.x version range
     }
   }
 }

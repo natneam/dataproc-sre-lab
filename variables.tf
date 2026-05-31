@@ -100,3 +100,14 @@ variable "dataproc_software_image_version" {
   default     = "2.1-debian11"
   description = "The software image version for the Dataproc cluster"
 }
+
+variable "dataproc_queue_fast_burn_promql" {
+  type        = string
+  default     = "Dataproc Queue Fast Burn Alert"
+  description = "The Prometheus query for the fast burn queue"
+}
+
+variable "email_address" {
+  type        = string
+  description = "The email address for the notification channel"
+}
