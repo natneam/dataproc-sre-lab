@@ -33,6 +33,12 @@ variable "nat" {
   description = "The NAT gateway to use for Dataproc resources"
 }
 
+variable "allow_internal" {
+  type        = string
+  default     = "allow-internal"
+  description = "The name of the firewall rule to allow internal traffic"
+}
+
 variable "dataproc_sa" {
   type        = string
   default     = "dataproc-worker-sa"
