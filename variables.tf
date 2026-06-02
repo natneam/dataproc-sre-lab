@@ -79,7 +79,7 @@ variable "dataproc_worker_machine_type" {
 
 variable "dataproc_preemptible_worker_num_instances" {
   type        = number
-  default     = 4
+  default     = 2
   description = "The number of preemptible worker instances for the Dataproc cluster"
 }
 
