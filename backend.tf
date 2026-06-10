@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "REDACTED"
     prefix = "terraform/state"
+    # bucket is supplied via backend.hcl (gitignored) — see backend.hcl.example
   }
 }

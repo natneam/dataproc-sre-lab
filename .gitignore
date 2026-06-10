@@ -45,3 +45,6 @@ terraform.rc
 
 # Ignore all .env files in the project
 .env
+
+# Backend config contains the real state bucket name
+backend.hcl
