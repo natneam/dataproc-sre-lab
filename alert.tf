@@ -13,7 +13,7 @@ resource "google_monitoring_alert_policy" "dataproc_queue_fast_burn_promql" {
   combiner     = "OR"
 
   conditions {
-    display_name = "Sustained Queue build up for 1h AND Active Queue build up for 5min"
+    display_name = "Fast-burn queue: 14.4x burn rate detected (pending > 2 within ~4 min)"
     condition_prometheus_query_language {
       query                     = <<-EOT
 (avg_over_time(dataproc_googleapis_com:cluster_yarn_apps{status="pending"}[1h]) > 2)
@@ -28,7 +28,7 @@ EOT
   notification_channels = [google_monitoring_notification_channel.email_notification.name]
 
   documentation {
-    content   = "YARN pending applications have exceeded 2 for over an hour and are still actively queuing. The cluster is unable to scale fast enough or is deadlocked."
+    content   = "YARN pending applications exceeded 2. This is a fast-burn alert: avg_over_time([1h]) with duration=0s fires within ~4 minutes once pending spikes, equivalent to a 14.4x burn rate (60 min / 4.17 min). The cluster cannot schedule new applications fast enough — likely resource exhaustion or a scheduling deadlock."
     mime_type = "text/markdown"
   }
 }

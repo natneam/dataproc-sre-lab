@@ -8,15 +8,12 @@ else
     exit 1
 fi
 
-# upload all the pyspark scripts to the GCS bucket
+# upload the test pyspark scripts to the GCS bucket
 gcloud storage cp spark_files/$TEST_FILE gs://$BUCKET_NAME/
 
 # Submit a PySpark jobs to the Dataproc cluster
-# Replace BUCKET_NAME with actual GCS bucket name
-for i in {1..1}; do
-  gcloud dataproc jobs submit pyspark gs://$BUCKET_NAME/$TEST_FILE \
+gcloud dataproc jobs submit pyspark gs://$BUCKET_NAME/$TEST_FILE \
       --cluster=secure-dataproc-cluster \
       --region=us-central1 \
       --async \
       -- $BUCKET_NAME
-done
