@@ -53,3 +53,26 @@ resource "google_compute_firewall" "allow_internal" {
 
   source_ranges = ["10.10.0.0/24"]
 }
+
+
+# ====================================================================================
+# This is a test section of the newtworkig firewall, will be commented out by default.
+# ====================================================================================
+
+# # This firewall rule blocks egress to Google APIs from VMs running as the Dataproc Worker Service Account
+# resource "google_compute_firewall" "block_google_apis_egress" {
+#   name      = "block-egress-to-google-apis"
+#   network   = google_compute_network.custom_vpc.id
+#   direction = "EGRESS"
+#   priority  = 1000
+
+#   deny {
+#     protocol = "tcp"
+#     ports    = ["443"]
+#   }
+
+#   destination_ranges = ["0.0.0.0/0"]
+
+#   # Only block egress for VMs running as the Dataproc Worker Service Account
+#   target_service_accounts = [google_service_account.dataproc_sa.email]
+# }
